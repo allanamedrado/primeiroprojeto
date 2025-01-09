@@ -43,4 +43,19 @@ public class CasoJudicialService {
         casos.add(entity);
         return "Criado!";
     }
+
+    public CasoJudicial atualizarCasoJudicial(CasoJudicial entity) {
+        casos.remove(entity);
+        casos.add(entity);
+
+        return entity;
+    }
+
+    public void removerCasoJudicial(Long id) {
+        for (CasoJudicial caso : casos) {
+            if (caso.getNumero() == id) {
+                casos.remove(caso);
+            }
+        }
+    }
 }
