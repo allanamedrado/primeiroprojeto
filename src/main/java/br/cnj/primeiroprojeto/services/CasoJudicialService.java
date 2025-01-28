@@ -6,56 +6,35 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import br.cnj.primeiroprojeto.dao.CasoJudicialDAO;
 import br.cnj.primeiroprojeto.models.CasoJudicial;
 
 @Service
 public class CasoJudicialService {
     private List<CasoJudicial> casos;
+    private final CasoJudicialDAO casoJudicialDAO;
 
-    public CasoJudicialService() {
-        casos = new ArrayList<CasoJudicial>(Arrays.asList(new CasoJudicial[]{
-            new CasoJudicial(1, 'A', "Caso 1"),
-            new CasoJudicial(2, 'B', "Caso 2")            
-        }));
+    public CasoJudicialService(CasoJudicialDAO casoJudicialDAO) {
+        this.casoJudicialDAO = casoJudicialDAO;
     }
 
     public List<CasoJudicial> pegarTodosCasosJudiciais() {
-        return casos;
+        return casoJudicialDAO.findAll();
     }
 
-    public CasoJudicial pegarCasoJudicialPorID(Long id) {
-        for (CasoJudicial caso : casos) {
-            if (caso.getNumero() == id) {
-                return caso;
-            } 
-        }
-
-        return null;
+    public CasoJudicial pegarCasoJudicialPorID(int id) {
+        return casoJudicialDAO.findById(id);
     }
 
-    public String criarCaso(CasoJudicial entity) {
-        for (CasoJudicial caso : casos) {
-            if (caso.getNumero() == entity.getNumero()) {
-                return "Este caso já existe!";
-            } 
-        }
-
-        casos.add(entity);
-        return "Criado!";
+    public void criarCaso(CasoJudicial entity) {
+        casoJudicialDAO.save(entity);
     }
 
-    public CasoJudicial atualizarCasoJudicial(CasoJudicial entity) {
-        casos.remove(entity);
-        casos.add(entity);
-
-        return entity;
+    public void atualizarCasoJudicial(CasoJudicial entity) {
+        casoJudicialDAO.update(entity);
     }
 
-    public void removerCasoJudicial(Long id) {
-        for (CasoJudicial caso : casos) {
-            if (caso.getNumero() == id) {
-                casos.remove(caso);
-            }
-        }
+    public void removerCasoJudicial(int id) {
+        casoJudicialDAO.delete(id);
     }
 }

@@ -1,9 +1,19 @@
 package br.cnj.primeiroprojeto.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table (name = "CasosJudiciais")
 public class CasoJudicial {
-    int numero;
-    char decisao;
-    String descricao;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int numero;
+    private char decisao;
+    private String descricao;
 
     public CasoJudicial(int numero, char decisao, String descricao) {
         this.numero = numero;
